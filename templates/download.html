@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Drums</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Drums Extracted!</h1>
+        <p class="text-gray-600 mb-4">Your drum track is ready for download. Click the button below to get it.</p>
+        <a href="{{ download_url }}" download
+           class="w-full inline-block bg-indigo-600 text-white text-center py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-300 mb-4">
+            Download Drums
+        </a>
+        <a href="/"
+           class="w-full inline-block bg-gray-600 text-white text-center py-2 px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300">
+            Back to Upload
+        </a>
+    </div>
+</body>
+</html>

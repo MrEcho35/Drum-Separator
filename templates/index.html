@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Audio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Upload Audio</h1>
+        <p class="text-gray-600 mb-4">Upload an audio file to extract the drum track.</p>
+        <form action="/upload" method="POST" enctype="multipart/form-data" onsubmit="startProgress()">
+            <input type="file" name="file" accept=".mp3,.wav" class="w-full mb-4">
+            <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-300">
+                Upload and Process
+            </button>
+        </form>
+        <div id="progress-container" class="hidden mt-4">
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full" style="width: 0%"></div>
+            </div>
+            <p id="progress-text" class="text-center text-gray-600 mt-2">0%</p>
+        </div>
+    </div>
+
+    <script>
+        function startProgress() {
+            // Show the progress bar
+            document.getElementById('progress-container').classList.remove('hidden');
+
+            // Connect to the progress stream
+            const eventSource = new EventSource('/progress');
+
+            eventSource.onmessage = function(event) {
+                const progress = parseInt(event.data);
+                document.getElementById('progress-bar').style.width = `${progress}%`;
+                document.getElementById('progress-text').innerText = `${progress}%`;
+
+                // Close the connection when progress reaches 100%
+                if (progress === 100) {
+                    eventSource.close();
+                }
+            };
+        }
+    </script>
+</body>
+</html>
